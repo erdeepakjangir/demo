@@ -1,0 +1,275 @@
+﻿@model Survey.Web.ViewModel.StudentViewModel
+@using System.Web.Configuration;
+@using Survey.Web;
+@using Survey.Business.Entities.Enums;
+@using Survey.Web.Resources;
+@{
+    ViewBag.Title = "StudentView";
+}
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="breadcrumb-wraper">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li>@Html.ActionLink("My Qualification", "Index", "Home")</li>
+                    <li class="active">Student</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel-group panel-bg" id="accordion">
+            <div class="panel panel-default">
+                <div class="container">
+                    <div class="panel-container">
+                        <div class="panel-heading">
+                            <h4 class="panel-title accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#panel1">@ModelValidations.Home_Student_Information_Header <i class="glyphicon glyphicon-minus pull-right"></i></h4>
+                        </div>
+                        <div id="panel1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                @if (User.IsInRole(UserRole.UGStudent.ToString()))
+                                {
+                                    @Html.Raw(ModelValidations.Home_UGStudent_Information_Content)
+                                }
+                                else
+                                {
+                                    @Html.Raw(ModelValidations.Home_Student_Information_Content)
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="container">
+            <div class="content-container">
+                <div class="row  sidebar-menu">
+                    <div id="colMain" class="col-md-12">
+                        <ul class="nav nav-tabs" id="qualificationTab">
+                            <li class='active'><a data-target="#approvedQual" data-toggle="tab">@ModelValidations.Student_ExistingQual_Header</a></li>
+                            @if (User.IsInRole(UserRole.UGStudent.ToString()))
+                            {
+                                <li><a id="pendingQualtab" data-target="#pendingQual" data-toggle="tab">@ModelValidations.Student_PendingQual_Header</a></li>
+                                <li><a data-target="#rejectedQual" data-toggle="tab">@ModelValidations.Student_RejectedQual_Header</a></li>
+                            }
+                        </ul>
+                        <div class="tab-content">
+                            <!-- Approved Qualifications -->
+                            <div class='tab-pane active' id="approvedQual">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="tblApprovedQualifications">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-1">
+                                                    @Html.DisplayName(ModelValidations.Home_Grid_Title_Year)
+                                                </th>
+                                                <th class="col-md-4">
+                                                    @Html.DisplayName(ModelValidations.Home_Grid_Title_QualificationCode)
+                                                </th>
+                                                <th class="col-md-3">
+                                                    @Html.DisplayName(ModelValidations.Home_Grid_Title_Subject)
+                                                </th>
+                                                <th class="col-md-2">
+                                                    @Html.DisplayName(ModelValidations.Home_Grid_Title_Result)
+                                                </th>
+                                                <th class="col-md-2">
+                                                    @Html.DisplayName(ModelValidations.Home_Grid_Title_Sitting)
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.ExistingQualifications != null)
+                                            {
+                                                foreach (var item in Model.ExistingQualifications)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Year)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.QualificationTitle)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.SubjectTitle)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Result)
+                                                        </td>
+
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.SittingTitle)
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            @if (User.IsInRole(UserRole.UGStudent.ToString()))
+                            {
+                                <!-- Pending Qualifications -->
+                                <div class='tab-pane' id="pendingQual">
+                                    @Html.Partial("_PendingQualificationView", Model.PendingQualifications)
+                                </div>
+                                <!-- Rejected Qualifications -->
+                                <div class='tab-pane' id="rejectedQual">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover" id="tblRejectedQualifications">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-1">
+                                                        @Html.DisplayName(ModelValidations.Home_Grid_Title_Year)
+                                                    </th>
+                                                    <th class="col-md-2">
+                                                        @Html.DisplayName(ModelValidations.Home_Grid_Title_QualificationCode)
+                                                    </th>
+                                                    <th class="col-md-2">
+                                                        @Html.DisplayName(ModelValidations.Home_Grid_Title_Subject)
+                                                    </th>
+                                                    <th class="col-md-1">
+                                                        @Html.DisplayName(ModelValidations.Home_Grid_Title_Result)
+                                                    </th>
+                                                    <th class="col-md-1">
+                                                        @Html.DisplayName(ModelValidations.Home_Grid_Title_Sitting)
+                                                    </th>
+                                                    <th class="col-md-5">
+                                                        @Html.DisplayName(ModelValidations.Home_Grid_Title_Remark)
+                                                    </th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.RejectedQualifications != null)
+                                                {
+                                                    foreach (var item in Model.RejectedQualifications)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Year)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.QualificationTitle)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.SubjectTitle)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.Result)
+                                                            </td>
+
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => item.SittingTitle)
+                                                            </td>
+                                                            <td>
+                                                                <span style="white-space: pre-line"> @Html.Raw(item.Remark)</span>
+                                                            </td>
+
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                @if (User.IsInRole(UserRole.UGStudent.ToString()))
+                {
+                    <fieldset>
+                        <h5>@Html.DisplayName(ModelValidations.@Home_AddQualification_Title)</h5>
+                        @using (Ajax.BeginForm("Add", "Qualification", null, new AjaxOptions { HttpMethod = "Post", OnBegin = "ajaxindicatorstart()", OnComplete = "ajaxindicatorstop", OnSuccess = "qualificationService.AddQualification.onAddSuccess", OnFailure = "qualificationService.AddQualification.onAddFail" }, new { id = "frmAddQualification", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationMessage("Error")
+                            <div class="add-new-qualification row " id="dvAddQualification">
+
+                                <div class="col-md-1 " >
+                                    @Html.DropDownListFor(m => Model.AddQualification.Year, new SelectList(ViewBag.Years), ModelValidations.Dropdown_Year_Label, new { placeholder = "" })
+                                    @Html.ValidationMessageFor(model => Model.AddQualification.Year, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(m => Model.AddQualification.QualificationTypeCode, ViewBag.Qualifications as SelectList, ModelValidations.Dropdown_Qualification_Label, new { })
+                                    @Html.ValidationMessageFor(model => Model.AddQualification.QualificationTypeCode, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.DropDownListFor(m => Model.AddQualification.SubjectCode, ViewBag.Subjects as SelectList, ModelValidations.Dropdown_Subject_Label, new { })
+                                    @Html.ValidationMessageFor(model => Model.AddQualification.SubjectCode, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-1">
+                                    @Html.DropDownListFor(m => Model.AddQualification.Result, ViewBag.Results as SelectList, ModelValidations.Dropdown_Result_Label, new { })
+                                    @Html.ValidationMessageFor(model => Model.AddQualification.Result, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-1">
+                                    @Html.DropDownListFor(m => Model.AddQualification.SittingCode, ViewBag.Sittings as SelectList, ModelValidations.Dropdown_Sitting_Label, new { })
+                                    @Html.ValidationMessageFor(model => Model.AddQualification.SittingCode, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <div id="dvFileUpload" class="col-md-12">
+                                            <button type="button" class="btn btn-icon btn-upload" id="btnUpload" onclick='$("#AddQualification_Certificate").click()'>Certificate</button>
+                                            <input style="visibility:hidden;opacity:0" type="file" id="AddQualification_Certificate" />
+                                        </div>
+                                        <div id="dvfileName" class="col-md-8"></div>
+
+                                        <div id="dvRemove" style="display:none" class="col-md-4 col">
+                                            <a class="btn btn-icon btn-delete" id="btnAddQualification_Remove" value="Remove">Remove</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" id="btnAddQualification" class="btn btn-icon btn-add">Save</button>
+                                </div>
+                            </div>
+                        }
+                    </fieldset>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    @if (User.IsInRole(UserRole.UGStudent.ToString()))
+    {
+        @Scripts.Render("~/bundles/studentjs");
+
+        <script type="text/javascript">
+
+            var maxCertificateSize = @Convert.ToInt64( WebConfigurationManager.AppSettings["MaxCertSizeMB"].ToString()) * 1024 * 1024;
+            var AppMessages = AppMessages || {};
+            AppMessages.MaxFileSize = '@(ModelValidations.Validation_Certificate_MaxSize + " " + WebConfigurationManager.AppSettings["MaxCertSizeMB"] + " MB")';
+            var AppUrlSettings = AppUrlSettings || {};
+            AppUrlSettings.UploadCertificateUrl = '@Url.Action("AddCertificate", "Qualification")';
+            AppUrlSettings.AddQualificationUrl = '@Url.Action("Add", "Qualification")';
+            AppUrlSettings.DeleteQualificationUrl = '@Url.Action("Delete", "Qualification")';
+            $(document).ready(function () {
+                qualificationService.AddQualification.init();
+            });
+        </script>
+    }
+    <script type="text/javascript">
+        $(function(){
+            $("#tblApprovedQualifications").DataTable({
+                searching: false,
+                paging: true,
+                bLengthChange: false,
+                pageLength:  @Convert.ToInt16(System.Web.Configuration.WebConfigurationManager.AppSettings["DefaultStudentPagesize"]),
+                language:
+                    {
+                        infoEmpty: AppMessages.noRecordMessage
+                    }
+            });
+        });
+    </script>
+}

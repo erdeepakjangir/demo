@@ -1,0 +1,51 @@
+﻿@model Survey.Web.ViewModel.StudentViewModel
+@using Survey.Business.Entities.Enums;
+@using Survey.Web.Resources;
+
+<table class="table" id="tblExistingQualifications">
+    <thead>
+        <tr>
+            <th class="col-md-2">
+                @Html.DisplayName(ModelValidations.Home_Grid_Title_Year)
+            </th>
+            <th class="col-md-4">
+                @Html.DisplayName(ModelValidations.Home_Grid_Title_QualificationTitle)
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayName(ModelValidations.Home_Grid_Title_Subject)
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayName(ModelValidations.Home_Grid_Title_Result)
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayName(ModelValidations.Home_Grid_Title_Sitting)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ExistingQualifications != null)
+        {
+            foreach (var item in Model.ExistingQualifications)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QualificationTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubjectTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Result)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SittingTitle)
+                </td>
+            </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,0 +1,500 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Account_InvalidLoginError" xml:space="preserve">
+    <value>Invalid login attempt</value>
+    <comment>Login</comment>
+  </data>
+  <data name="Account_InvalidLoginMessage" xml:space="preserve">
+    <value>Invalid login, please try again.</value>
+    <comment>Login</comment>
+  </data>
+  <data name="Account_UnauthorisedAccess_Description" xml:space="preserve">
+    <value>You are not authorized to view this page.</value>
+    <comment>Exception</comment>
+  </data>
+  <data name="Button_Add_Qualification_Save_Label" xml:space="preserve">
+    <value>Add Qualification</value>
+    <comment>Add Qualification</comment>
+  </data>
+  <data name="Dropdown_Qualification_Label" xml:space="preserve">
+    <value>Select Qualification.</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Dropdown_Result_Label" xml:space="preserve">
+    <value>Select Grade/Result.</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Dropdown_Sitting_Label" xml:space="preserve">
+    <value>Select When Exam Sat.</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Dropdown_Subject_Label" xml:space="preserve">
+    <value>Select Subject.</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Dropdown_Year_Label" xml:space="preserve">
+    <value>Select Year.</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Exception_Development_Message" xml:space="preserve">
+    <value>An error has occurred while processing.</value>
+    <comment>Exception</comment>
+  </data>
+  <data name="Exception_Production_Message" xml:space="preserve">
+    <value>Something went wrong while executing this request, please contact your administrator.</value>
+    <comment>Exception</comment>
+  </data>
+  <data name="Header_Update_Qualification_Label" xml:space="preserve">
+    <value>Update</value>
+    <comment>Edit qualification by student</comment>
+  </data>
+  <data name="Home_AddQualification_Title" xml:space="preserve">
+    <value>Add New Qualification</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Home_Grid_Column_Delete" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Student Pending Grid</comment>
+  </data>
+  <data name="Home_Grid_Column_Edit" xml:space="preserve">
+    <value>Edit</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Grid_Title_Action" xml:space="preserve">
+    <value>Action</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Grid_Title_Faculty" xml:space="preserve">
+    <value>Faculty</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Grid_Title_QualificationCode" xml:space="preserve">
+    <value>Qualification Code</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Grid_Title_QualificationTitle" xml:space="preserve">
+    <value>Qualification Title</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Grid_Title_Remark" xml:space="preserve">
+    <value>Remark</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Grid_Title_Result" xml:space="preserve">
+    <value>Grade Received</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Grid_Title_Sitting" xml:space="preserve">
+    <value>When Exam Sat</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Grid_Title_Status" xml:space="preserve">
+    <value>Status</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Grid_Title_StudentName" xml:space="preserve">
+    <value>Student Name</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Grid_Title_StudentNo" xml:space="preserve">
+    <value>Student No</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Grid_Title_Subject" xml:space="preserve">
+    <value>Subject</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Grid_Title_SubmittedDate" xml:space="preserve">
+    <value>Submitted Date</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Grid_Title_TimeLine" xml:space="preserve">
+    <value>TimeLine</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Grid_Title_Year" xml:space="preserve">
+    <value>Year</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Search_Title_CourseStage" xml:space="preserve">
+    <value>Course Stage</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Search_Title_Mode" xml:space="preserve">
+    <value>Mode</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Search_Title_Name" xml:space="preserve">
+    <value>Name</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Search_Title_QualAim" xml:space="preserve">
+    <value>Qual. Aim</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Search_Title_QualificationCode" xml:space="preserve">
+    <value>Qualification  Code</value>
+    <comment>Index Grid</comment>
+  </data>
+  <data name="Home_Student_Information_Content" xml:space="preserve">
+    <value>&lt;ul&gt;
+&lt;li&gt;Below is a list of the qualification that we currently have on our records. &lt;/li&gt;
+Unfortunately you cannot add any more qualifications, please log out of the system.&lt;/li&gt;
+&lt;/ul&gt;</value>
+    <comment>Student Index</comment>
+  </data>
+  <data name="Home_Student_Information_Header" xml:space="preserve">
+    <value>Instructions</value>
+    <comment>Student Index</comment>
+  </data>
+  <data name="Home_UGStudent_Information_Content" xml:space="preserve">
+    <value>&lt;ul&gt;
+&lt;li&gt;You will see a list of the qualification that we know you have already completed. This information is taken from your admissions records. Please check the list carefully. &lt;/li&gt;
+&lt;li&gt;If you have additional UK qualifications that appear on the UCAS Tariff and are not listed below. Please add these using the drop down boxes in the table. You should add all the qualifications that you hold which appear in the list of options even if these are not directly related to the subject you are enrolled on (e.g. Music exams, Drama exams. Young Enterprise awards). &lt;/li&gt;
+&lt;li&gt;There is no need to re-enter any of the qualifications that are already listed in the table. This includes cases where the subject you studied is slightly different to the subject listed (for example. If you studied Media Productions but this is listed as Creative and Media, there is no need to re-enter this qualification with an amended subject).&lt;/li&gt;
+&lt;li&gt;If your qualification is not listed in the drop down boxes (e.g. Access to HE, professional qualification, non-UK qualifications) there is no need to enter it. Please log out of the system. &lt;/li&gt;
+&lt;/ul&gt;</value>
+    <comment>Student Index</comment>
+  </data>
+  <data name="Message_Certificate_Error" xml:space="preserve">
+    <value>Some error occurred while uploading certificate.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Certificate_Fail" xml:space="preserve">
+    <value>Unable to upload certificate.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Edit_All_Fields_Required" xml:space="preserve">
+    <value>Please fill all fields.</value>
+    <comment>Edit</comment>
+  </data>
+  <data name="Message_FileUpoad" xml:space="preserve">
+    <value>File Should be less than or equal to 2MB</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Grid_No_Record_Found" xml:space="preserve">
+    <value>No records found.</value>
+    <comment>All</comment>
+  </data>
+  <data name="Message_Internal_Server_Error" xml:space="preserve">
+    <value>Some internal error occurred. Please contact administrator.</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Message_Qualification_Add_Error" xml:space="preserve">
+    <value>Error occured while adding qualification.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Add_Fail" xml:space="preserve">
+    <value>Error in adding qualification.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Add_Success" xml:space="preserve">
+    <value>New qualification added and you can find it on &lt;a href='#' onClick =" $('#qualificationTab a:eq(1)').tab('show'); hideMessage();" =&gt;Pending&lt;/a&gt; qualification tab.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Add_Validation" xml:space="preserve">
+    <value>Incorrect input values.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Already_Exists" xml:space="preserve">
+    <value>This qualification is already added.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Apporve_Error" xml:space="preserve">
+    <value>Error occured while approving qualifiaction.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Apporve_Fail" xml:space="preserve">
+    <value>Qualifiaction could not be  approved.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Apporve_Success" xml:space="preserve">
+    <value>Qualification approved successfully.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Delete_Confirm" xml:space="preserve">
+    <value>Are you sure to delete this qualification?</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Delete_Error" xml:space="preserve">
+    <value>Error occured while deleting qualification.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Delete_Fail" xml:space="preserve">
+    <value>Fail to delete qualification.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Delete_Success" xml:space="preserve">
+    <value>Qualification deleted successfully.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Edit_Error" xml:space="preserve">
+    <value>Error occured while updating qualification.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Edit_Fail" xml:space="preserve">
+    <value>Qualification could not be updated.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Edit_Success" xml:space="preserve">
+    <value>Qualification updated  successfully.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Reject_Error" xml:space="preserve">
+    <value>Error occured while rejecting qualification.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Reject_Fail" xml:space="preserve">
+    <value>Qualifiaction could not be  rejected.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Reject_Remark_Len" xml:space="preserve">
+    <value>Remark is required and should not exceed 4000 character.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Reject_Success" xml:space="preserve">
+    <value>Qualification rejected successfully.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Message_Qualification_Search_Fail" xml:space="preserve">
+    <value>Could not able to search.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="PlannerStaff_Search_FacultyCode" xml:space="preserve">
+    <value>Faculty</value>
+    <comment>PlannerStaff Index</comment>
+  </data>
+  <data name="PlannerStaff_Search_QualificationCode" xml:space="preserve">
+    <value>Qualification Code</value>
+    <comment>PlannerStaff Index</comment>
+  </data>
+  <data name="PlannerStaff_Search_Status" xml:space="preserve">
+    <value>Status</value>
+    <comment>PlannerStaff Index</comment>
+  </data>
+  <data name="PlannerStaff_Search_StudentId" xml:space="preserve">
+    <value>Student No</value>
+    <comment>PlannerStaff Index</comment>
+  </data>
+  <data name="PlannerStaff_Search_SubmittedDate" xml:space="preserve">
+    <value>Submitted</value>
+    <comment>PlannerStaff Index</comment>
+  </data>
+  <data name="PlannerStaff_Search_SubmittedFromDate" xml:space="preserve">
+    <value>From Date</value>
+    <comment>PlannerStaff Index</comment>
+  </data>
+  <data name="PlannerStaff_Search_SubmittedToDate" xml:space="preserve">
+    <value>To Date</value>
+    <comment>PlannerStaff Index</comment>
+  </data>
+  <data name="Student_ExistingQual_Header" xml:space="preserve">
+    <value>Existing Qualification(s)</value>
+    <comment>Student Index</comment>
+  </data>
+  <data name="Student_Existing_Qual_Label" xml:space="preserve">
+    <value>Existing Qualification</value>
+    <comment>Student Detail Grid</comment>
+  </data>
+  <data name="Student_Grid_Column_Approve" xml:space="preserve">
+    <value>Approve</value>
+    <comment>Student Detail Grid</comment>
+  </data>
+  <data name="Student_Grid_Column_Edit" xml:space="preserve">
+    <value>Edit</value>
+    <comment>Student Detail Grid</comment>
+  </data>
+  <data name="Student_Grid_Column_Reject" xml:space="preserve">
+    <value>Reject</value>
+    <comment>Student Detail Grid</comment>
+  </data>
+  <data name="Student_PendingQual_Header" xml:space="preserve">
+    <value>Pending Qualification(s)</value>
+    <comment>Student Index</comment>
+  </data>
+  <data name="Student_Pending_Qual_Label" xml:space="preserve">
+    <value>Pending Qualification</value>
+    <comment>Student Detail Grid</comment>
+  </data>
+  <data name="Student_RejectedQual_Header" xml:space="preserve">
+    <value>Rejected Qualification(s)</value>
+    <comment>Student Index</comment>
+  </data>
+  <data name="Student_Rejected_Qual_Label" xml:space="preserve">
+    <value>Rejected Qualification</value>
+    <comment>Student Detail Grid</comment>
+  </data>
+  <data name="Validation_Certificate_Extenstions" xml:space="preserve">
+    <value>Supported file extensions:</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Validation_Certificate_MaxSize" xml:space="preserve">
+    <value>File size can't exceed</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Validation_Certificate_MinSize" xml:space="preserve">
+    <value>File size is too small</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Validation_Certificate_Required" xml:space="preserve">
+    <value>File's length is zero, or no files found.</value>
+    <comment>Student</comment>
+  </data>
+  <data name="Validation_Dates_Required" xml:space="preserve">
+    <value>Please select both dates.</value>
+    <comment>Report</comment>
+  </data>
+  <data name="Validation_Date_Range_Invalid" xml:space="preserve">
+    <value>From Date should be less than To Date.</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Validation_Qualification_Required" xml:space="preserve">
+    <value>Select Qualification.</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Validation_Remark_Length" xml:space="preserve">
+    <value>Maximum length for comment is 400 characters.</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Validation_Result_Required" xml:space="preserve">
+    <value>Select Grade/Result.</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Validation_Sitting_Required" xml:space="preserve">
+    <value>Select When Exam Sat.</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Validation_Subject_Required" xml:space="preserve">
+    <value>Select Subject.</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Validation_Year_Required" xml:space="preserve">
+    <value>Select Year.</value>
+    <comment>Common</comment>
+  </data>
+  <data name="Account_login_instruction" xml:space="preserve">
+    <value>Please enter your Coventry University username (e.g. bloggsj2) and password and click Login.</value>
+    <comment>Login</comment>
+  </data>
+  <data name="Account_InvalidLoginMessage1" xml:space="preserve">
+    <value>Note: Your username is your University login username (e.g. bloggsj2) and not your email address. If you are still experience problems, please visit the ITS Service Desk in the Library.</value>
+    <comment>Login</comment>
+  </data>
+</root>

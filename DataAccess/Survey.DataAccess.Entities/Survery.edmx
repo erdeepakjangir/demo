@@ -1,0 +1,609 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SurveyToolDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminLogin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="EmployeeSurveyDetails">
+          <Key>
+            <PropertyRef Name="EmpSurveyId" />
+          </Key>
+          <Property Name="EmpSurveyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveyId" Type="uniqueidentifier" />
+          <Property Name="UserId" Type="varchar" MaxLength="50" />
+          <Property Name="EmpSurveyLink" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="SurveySubmitDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OptionMaster">
+          <Key>
+            <PropertyRef Name="OptionId" />
+          </Key>
+          <Property Name="OptionId" Type="int" Nullable="false" />
+          <Property Name="OptionType" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="QuestionBank">
+          <Key>
+            <PropertyRef Name="QueId" />
+          </Key>
+          <Property Name="QueId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QueText" Type="varchar(max)" Nullable="false" />
+          <Property Name="OptionType" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="datetime" />
+        </EntityType>
+        <EntityType Name="QuestionBankOption">
+          <Key>
+            <PropertyRef Name="AnswerId" />
+          </Key>
+          <Property Name="AnswerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QueId" Type="int" />
+          <Property Name="Answers" Type="varchar" MaxLength="255" />
+          <Property Name="CorrectAnswer" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SurveyAnswers">
+          <Key>
+            <PropertyRef Name="SurveyAnsId" />
+          </Key>
+          <Property Name="SurveyAnsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveyId" Type="uniqueidentifier" />
+          <Property Name="QueId" Type="int" />
+          <Property Name="Selectedoption" Type="int" />
+        </EntityType>
+        <EntityType Name="SurveyDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveyId" Type="uniqueidentifier" />
+          <Property Name="QueId" Type="int" />
+          <Property Name="QueWeightage" Type="int" />
+        </EntityType>
+        <EntityType Name="SurveyMaster">
+          <Key>
+            <PropertyRef Name="SurveyId" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveyId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SurveyTitle" Type="varchar" MaxLength="255" />
+          <Property Name="SurveyType" Type="int" />
+          <Property Name="IsUnique" Type="bit" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CraetedBy" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SurveyType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SurveyType" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_EmployeeSurveyDetails_SurveyMaster">
+          <End Role="SurveyMaster" Type="Self.SurveyMaster" Multiplicity="0..1" />
+          <End Role="EmployeeSurveyDetails" Type="Self.EmployeeSurveyDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SurveyMaster">
+              <PropertyRef Name="SurveyId" />
+            </Principal>
+            <Dependent Role="EmployeeSurveyDetails">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestionBank_OptionMaster">
+          <End Role="OptionMaster" Type="Self.OptionMaster" Multiplicity="0..1" />
+          <End Role="QuestionBank" Type="Self.QuestionBank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OptionMaster">
+              <PropertyRef Name="OptionId" />
+            </Principal>
+            <Dependent Role="QuestionBank">
+              <PropertyRef Name="OptionType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestionBankOption_QuestionBank">
+          <End Role="QuestionBank" Type="Self.QuestionBank" Multiplicity="0..1" />
+          <End Role="QuestionBankOption" Type="Self.QuestionBankOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBank">
+              <PropertyRef Name="QueId" />
+            </Principal>
+            <Dependent Role="QuestionBankOption">
+              <PropertyRef Name="QueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SurveyAnswers_QuestionBank">
+          <End Role="QuestionBank" Type="Self.QuestionBank" Multiplicity="0..1" />
+          <End Role="SurveyAnswers" Type="Self.SurveyAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBank">
+              <PropertyRef Name="QueId" />
+            </Principal>
+            <Dependent Role="SurveyAnswers">
+              <PropertyRef Name="QueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SurveyAnswers_SurveyMaster">
+          <End Role="SurveyMaster" Type="Self.SurveyMaster" Multiplicity="0..1" />
+          <End Role="SurveyAnswers" Type="Self.SurveyAnswers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SurveyMaster">
+              <PropertyRef Name="SurveyId" />
+            </Principal>
+            <Dependent Role="SurveyAnswers">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SurveyData_SurveyType">
+          <End Role="SurveyType" Type="Self.SurveyType" Multiplicity="0..1" />
+          <End Role="SurveyMaster" Type="Self.SurveyMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SurveyType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="SurveyMaster">
+              <PropertyRef Name="SurveyType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SurveyDetails_SurveyMaster">
+          <End Role="SurveyMaster" Type="Self.SurveyMaster" Multiplicity="0..1" />
+          <End Role="SurveyDetails" Type="Self.SurveyDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SurveyMaster">
+              <PropertyRef Name="SurveyId" />
+            </Principal>
+            <Dependent Role="SurveyDetails">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SurveyDetailsMaster_QuestionBank">
+          <End Role="QuestionBank" Type="Self.QuestionBank" Multiplicity="0..1" />
+          <End Role="SurveyDetails" Type="Self.SurveyDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBank">
+              <PropertyRef Name="QueId" />
+            </Principal>
+            <Dependent Role="SurveyDetails">
+              <PropertyRef Name="QueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SurveyToolDBModelStoreContainer">
+          <EntitySet Name="AdminLogin" EntityType="Self.AdminLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeSurveyDetails" EntityType="Self.EmployeeSurveyDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OptionMaster" EntityType="Self.OptionMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionBank" EntityType="Self.QuestionBank" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionBankOption" EntityType="Self.QuestionBankOption" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SurveyAnswers" EntityType="Self.SurveyAnswers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SurveyDetails" EntityType="Self.SurveyDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SurveyMaster" EntityType="Self.SurveyMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SurveyType" EntityType="Self.SurveyType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EmployeeSurveyDetails_SurveyMaster" Association="Self.FK_EmployeeSurveyDetails_SurveyMaster">
+            <End Role="SurveyMaster" EntitySet="SurveyMaster" />
+            <End Role="EmployeeSurveyDetails" EntitySet="EmployeeSurveyDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestionBank_OptionMaster" Association="Self.FK_QuestionBank_OptionMaster">
+            <End Role="OptionMaster" EntitySet="OptionMaster" />
+            <End Role="QuestionBank" EntitySet="QuestionBank" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestionBankOption_QuestionBank" Association="Self.FK_QuestionBankOption_QuestionBank">
+            <End Role="QuestionBank" EntitySet="QuestionBank" />
+            <End Role="QuestionBankOption" EntitySet="QuestionBankOption" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SurveyAnswers_QuestionBank" Association="Self.FK_SurveyAnswers_QuestionBank">
+            <End Role="QuestionBank" EntitySet="QuestionBank" />
+            <End Role="SurveyAnswers" EntitySet="SurveyAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SurveyAnswers_SurveyMaster" Association="Self.FK_SurveyAnswers_SurveyMaster">
+            <End Role="SurveyMaster" EntitySet="SurveyMaster" />
+            <End Role="SurveyAnswers" EntitySet="SurveyAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SurveyData_SurveyType" Association="Self.FK_SurveyData_SurveyType">
+            <End Role="SurveyType" EntitySet="SurveyType" />
+            <End Role="SurveyMaster" EntitySet="SurveyMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SurveyDetails_SurveyMaster" Association="Self.FK_SurveyDetails_SurveyMaster">
+            <End Role="SurveyMaster" EntitySet="SurveyMaster" />
+            <End Role="SurveyDetails" EntitySet="SurveyDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SurveyDetailsMaster_QuestionBank" Association="Self.FK_SurveyDetailsMaster_QuestionBank">
+            <End Role="QuestionBank" EntitySet="QuestionBank" />
+            <End Role="SurveyDetails" EntitySet="SurveyDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SurveyToolDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdminLogin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="EmployeeSurveyDetail">
+          <Key>
+            <PropertyRef Name="EmpSurveyId" />
+          </Key>
+          <Property Name="EmpSurveyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveyId" Type="Guid" />
+          <Property Name="UserId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmpSurveyLink" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="SurveySubmitDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="SurveyMaster" Relationship="Self.FK_EmployeeSurveyDetails_SurveyMaster" FromRole="EmployeeSurveyDetails" ToRole="SurveyMaster" />
+        </EntityType>
+        <EntityType Name="OptionMaster">
+          <Key>
+            <PropertyRef Name="OptionId" />
+          </Key>
+          <Property Name="OptionId" Type="Int32" Nullable="false" />
+          <Property Name="OptionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="QuestionBanks" Relationship="Self.FK_QuestionBank_OptionMaster" FromRole="OptionMaster" ToRole="QuestionBank" />
+        </EntityType>
+        <EntityType Name="QuestionBank">
+          <Key>
+            <PropertyRef Name="QueId" />
+          </Key>
+          <Property Name="QueId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QueText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OptionType" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="OptionMaster" Relationship="Self.FK_QuestionBank_OptionMaster" FromRole="QuestionBank" ToRole="OptionMaster" />
+          <NavigationProperty Name="QuestionBankOptions" Relationship="Self.FK_QuestionBankOption_QuestionBank" FromRole="QuestionBank" ToRole="QuestionBankOption" />
+          <NavigationProperty Name="SurveyAnswers" Relationship="Self.FK_SurveyAnswers_QuestionBank" FromRole="QuestionBank" ToRole="SurveyAnswers" />
+          <NavigationProperty Name="SurveyDetails" Relationship="Self.FK_SurveyDetailsMaster_QuestionBank" FromRole="QuestionBank" ToRole="SurveyDetails" />
+        </EntityType>
+        <EntityType Name="QuestionBankOption">
+          <Key>
+            <PropertyRef Name="AnswerId" />
+          </Key>
+          <Property Name="AnswerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QueId" Type="Int32" />
+          <Property Name="Answers" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CorrectAnswer" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="QuestionBank" Relationship="Self.FK_QuestionBankOption_QuestionBank" FromRole="QuestionBankOption" ToRole="QuestionBank" />
+        </EntityType>
+        <EntityType Name="SurveyAnswer">
+          <Key>
+            <PropertyRef Name="SurveyAnsId" />
+          </Key>
+          <Property Name="SurveyAnsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveyId" Type="Guid" />
+          <Property Name="QueId" Type="Int32" />
+          <Property Name="Selectedoption" Type="Int32" />
+          <NavigationProperty Name="QuestionBank" Relationship="Self.FK_SurveyAnswers_QuestionBank" FromRole="SurveyAnswers" ToRole="QuestionBank" />
+          <NavigationProperty Name="SurveyMaster" Relationship="Self.FK_SurveyAnswers_SurveyMaster" FromRole="SurveyAnswers" ToRole="SurveyMaster" />
+        </EntityType>
+        <EntityType Name="SurveyDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveyId" Type="Guid" />
+          <Property Name="QueId" Type="Int32" />
+          <Property Name="QueWeightage" Type="Int32" />
+          <NavigationProperty Name="QuestionBank" Relationship="Self.FK_SurveyDetailsMaster_QuestionBank" FromRole="SurveyDetails" ToRole="QuestionBank" />
+          <NavigationProperty Name="SurveyMaster" Relationship="Self.FK_SurveyDetails_SurveyMaster" FromRole="SurveyDetails" ToRole="SurveyMaster" />
+        </EntityType>
+        <EntityType Name="SurveyMaster">
+          <Key>
+            <PropertyRef Name="SurveyId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveyId" Type="Guid" Nullable="false" />
+          <Property Name="SurveyTitle" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="SurveyType" Type="Int32" />
+          <Property Name="IsUnique" Type="Boolean" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CraetedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmployeeSurveyDetails" Relationship="Self.FK_EmployeeSurveyDetails_SurveyMaster" FromRole="SurveyMaster" ToRole="EmployeeSurveyDetails" />
+          <NavigationProperty Name="SurveyAnswers" Relationship="Self.FK_SurveyAnswers_SurveyMaster" FromRole="SurveyMaster" ToRole="SurveyAnswers" />
+          <NavigationProperty Name="SurveyDetails" Relationship="Self.FK_SurveyDetails_SurveyMaster" FromRole="SurveyMaster" ToRole="SurveyDetails" />
+          <NavigationProperty Name="SurveyType1" Relationship="Self.FK_SurveyData_SurveyType" FromRole="SurveyMaster" ToRole="SurveyType" />
+        </EntityType>
+        <EntityType Name="SurveyType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SurveyType1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SurveyMasters" Relationship="Self.FK_SurveyData_SurveyType" FromRole="SurveyType" ToRole="SurveyMaster" />
+        </EntityType>
+        <Association Name="FK_EmployeeSurveyDetails_SurveyMaster">
+          <End Role="SurveyMaster" Type="Self.SurveyMaster" Multiplicity="0..1" />
+          <End Role="EmployeeSurveyDetails" Type="Self.EmployeeSurveyDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SurveyMaster">
+              <PropertyRef Name="SurveyId" />
+            </Principal>
+            <Dependent Role="EmployeeSurveyDetails">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestionBank_OptionMaster">
+          <End Role="OptionMaster" Type="Self.OptionMaster" Multiplicity="0..1" />
+          <End Role="QuestionBank" Type="Self.QuestionBank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OptionMaster">
+              <PropertyRef Name="OptionId" />
+            </Principal>
+            <Dependent Role="QuestionBank">
+              <PropertyRef Name="OptionType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestionBankOption_QuestionBank">
+          <End Role="QuestionBank" Type="Self.QuestionBank" Multiplicity="0..1" />
+          <End Role="QuestionBankOption" Type="Self.QuestionBankOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBank">
+              <PropertyRef Name="QueId" />
+            </Principal>
+            <Dependent Role="QuestionBankOption">
+              <PropertyRef Name="QueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SurveyAnswers_QuestionBank">
+          <End Role="QuestionBank" Type="Self.QuestionBank" Multiplicity="0..1" />
+          <End Role="SurveyAnswers" Type="Self.SurveyAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBank">
+              <PropertyRef Name="QueId" />
+            </Principal>
+            <Dependent Role="SurveyAnswers">
+              <PropertyRef Name="QueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SurveyDetailsMaster_QuestionBank">
+          <End Role="QuestionBank" Type="Self.QuestionBank" Multiplicity="0..1" />
+          <End Role="SurveyDetails" Type="Self.SurveyDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionBank">
+              <PropertyRef Name="QueId" />
+            </Principal>
+            <Dependent Role="SurveyDetails">
+              <PropertyRef Name="QueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SurveyAnswers_SurveyMaster">
+          <End Role="SurveyMaster" Type="Self.SurveyMaster" Multiplicity="0..1" />
+          <End Role="SurveyAnswers" Type="Self.SurveyAnswer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SurveyMaster">
+              <PropertyRef Name="SurveyId" />
+            </Principal>
+            <Dependent Role="SurveyAnswers">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SurveyDetails_SurveyMaster">
+          <End Role="SurveyMaster" Type="Self.SurveyMaster" Multiplicity="0..1" />
+          <End Role="SurveyDetails" Type="Self.SurveyDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SurveyMaster">
+              <PropertyRef Name="SurveyId" />
+            </Principal>
+            <Dependent Role="SurveyDetails">
+              <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SurveyData_SurveyType">
+          <End Role="SurveyType" Type="Self.SurveyType" Multiplicity="0..1" />
+          <End Role="SurveyMaster" Type="Self.SurveyMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SurveyType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="SurveyMaster">
+              <PropertyRef Name="SurveyType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SurveyToolDBContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdminLogins" EntityType="Self.AdminLogin" />
+          <EntitySet Name="EmployeeSurveyDetails" EntityType="Self.EmployeeSurveyDetail" />
+          <EntitySet Name="OptionMasters" EntityType="Self.OptionMaster" />
+          <EntitySet Name="QuestionBanks" EntityType="Self.QuestionBank" />
+          <EntitySet Name="QuestionBankOptions" EntityType="Self.QuestionBankOption" />
+          <EntitySet Name="SurveyAnswers" EntityType="Self.SurveyAnswer" />
+          <EntitySet Name="SurveyDetails" EntityType="Self.SurveyDetail" />
+          <EntitySet Name="SurveyMasters" EntityType="Self.SurveyMaster" />
+          <EntitySet Name="SurveyTypes" EntityType="Self.SurveyType" />
+          <AssociationSet Name="FK_EmployeeSurveyDetails_SurveyMaster" Association="Self.FK_EmployeeSurveyDetails_SurveyMaster">
+            <End Role="SurveyMaster" EntitySet="SurveyMasters" />
+            <End Role="EmployeeSurveyDetails" EntitySet="EmployeeSurveyDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestionBank_OptionMaster" Association="Self.FK_QuestionBank_OptionMaster">
+            <End Role="OptionMaster" EntitySet="OptionMasters" />
+            <End Role="QuestionBank" EntitySet="QuestionBanks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestionBankOption_QuestionBank" Association="Self.FK_QuestionBankOption_QuestionBank">
+            <End Role="QuestionBank" EntitySet="QuestionBanks" />
+            <End Role="QuestionBankOption" EntitySet="QuestionBankOptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SurveyAnswers_QuestionBank" Association="Self.FK_SurveyAnswers_QuestionBank">
+            <End Role="QuestionBank" EntitySet="QuestionBanks" />
+            <End Role="SurveyAnswers" EntitySet="SurveyAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SurveyDetailsMaster_QuestionBank" Association="Self.FK_SurveyDetailsMaster_QuestionBank">
+            <End Role="QuestionBank" EntitySet="QuestionBanks" />
+            <End Role="SurveyDetails" EntitySet="SurveyDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SurveyAnswers_SurveyMaster" Association="Self.FK_SurveyAnswers_SurveyMaster">
+            <End Role="SurveyMaster" EntitySet="SurveyMasters" />
+            <End Role="SurveyAnswers" EntitySet="SurveyAnswers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SurveyDetails_SurveyMaster" Association="Self.FK_SurveyDetails_SurveyMaster">
+            <End Role="SurveyMaster" EntitySet="SurveyMasters" />
+            <End Role="SurveyDetails" EntitySet="SurveyDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SurveyData_SurveyType" Association="Self.FK_SurveyData_SurveyType">
+            <End Role="SurveyType" EntitySet="SurveyTypes" />
+            <End Role="SurveyMaster" EntitySet="SurveyMasters" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SurveyToolDBModelStoreContainer" CdmEntityContainer="SurveyToolDBContext">
+          <EntitySetMapping Name="AdminLogins">
+            <EntityTypeMapping TypeName="SurveyToolDBModel.AdminLogin">
+              <MappingFragment StoreEntitySet="AdminLogin">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeSurveyDetails">
+            <EntityTypeMapping TypeName="SurveyToolDBModel.EmployeeSurveyDetail">
+              <MappingFragment StoreEntitySet="EmployeeSurveyDetails">
+                <ScalarProperty Name="EmpSurveyId" ColumnName="EmpSurveyId" />
+                <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="EmpSurveyLink" ColumnName="EmpSurveyLink" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SurveySubmitDate" ColumnName="SurveySubmitDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OptionMasters">
+            <EntityTypeMapping TypeName="SurveyToolDBModel.OptionMaster">
+              <MappingFragment StoreEntitySet="OptionMaster">
+                <ScalarProperty Name="OptionId" ColumnName="OptionId" />
+                <ScalarProperty Name="OptionType" ColumnName="OptionType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionBanks">
+            <EntityTypeMapping TypeName="SurveyToolDBModel.QuestionBank">
+              <MappingFragment StoreEntitySet="QuestionBank">
+                <ScalarProperty Name="QueId" ColumnName="QueId" />
+                <ScalarProperty Name="QueText" ColumnName="QueText" />
+                <ScalarProperty Name="OptionType" ColumnName="OptionType" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionBankOptions">
+            <EntityTypeMapping TypeName="SurveyToolDBModel.QuestionBankOption">
+              <MappingFragment StoreEntitySet="QuestionBankOption">
+                <ScalarProperty Name="AnswerId" ColumnName="AnswerId" />
+                <ScalarProperty Name="QueId" ColumnName="QueId" />
+                <ScalarProperty Name="Answers" ColumnName="Answers" />
+                <ScalarProperty Name="CorrectAnswer" ColumnName="CorrectAnswer" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SurveyAnswers">
+            <EntityTypeMapping TypeName="SurveyToolDBModel.SurveyAnswer">
+              <MappingFragment StoreEntitySet="SurveyAnswers">
+                <ScalarProperty Name="SurveyAnsId" ColumnName="SurveyAnsId" />
+                <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
+                <ScalarProperty Name="QueId" ColumnName="QueId" />
+                <ScalarProperty Name="Selectedoption" ColumnName="Selectedoption" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SurveyDetails">
+            <EntityTypeMapping TypeName="SurveyToolDBModel.SurveyDetail">
+              <MappingFragment StoreEntitySet="SurveyDetails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
+                <ScalarProperty Name="QueId" ColumnName="QueId" />
+                <ScalarProperty Name="QueWeightage" ColumnName="QueWeightage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SurveyMasters">
+            <EntityTypeMapping TypeName="SurveyToolDBModel.SurveyMaster">
+              <MappingFragment StoreEntitySet="SurveyMaster">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
+                <ScalarProperty Name="SurveyTitle" ColumnName="SurveyTitle" />
+                <ScalarProperty Name="SurveyType" ColumnName="SurveyType" />
+                <ScalarProperty Name="IsUnique" ColumnName="IsUnique" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CraetedBy" ColumnName="CraetedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SurveyTypes">
+            <EntityTypeMapping TypeName="SurveyToolDBModel.SurveyType">
+              <MappingFragment StoreEntitySet="SurveyType">
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="SurveyType1" ColumnName="SurveyType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

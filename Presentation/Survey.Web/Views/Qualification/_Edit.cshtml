@@ -1,0 +1,147 @@
+﻿@model Survey.Web.ViewModel.QualificationViewModel
+@using Survey.Business.Entities.Enums;
+@using Survey.Web.Resources;
+@{
+    ViewBag.Title = "Edit";
+}
+
+@*@Scripts.Render("~/bundles/studentjs")
+    @*required for validation to work
+    @Scripts.Render("~/bundles/validationjs")*@
+
+@using (Ajax.BeginForm("Edit", "Qualification", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "editformbody" , OnBegin= "qualificationService.EditQualification.disableSubmit();", LoadingElementId= "resultLoading" }, new { @id = "editform" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="form-group">
+                    @Html.HiddenFor(s => s.StudentQualificationId)
+                    @Html.HiddenFor(s => s.StudentId)
+                    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                    @if (!string.IsNullOrWhiteSpace(ViewBag.SuccessMessage))
+                    {
+                        <div class="success-msg"><i class="fa fa-check-circle-o" aria-hidden="true"></i> @ViewBag.SuccessMessage </div>
+
+                    }
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Year, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(s => Model.Year, new SelectList(ViewBag.Years), ModelValidations.Dropdown_Year_Label, new { @class = "form-control" })
+
+                        @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.QualificationTypeCode, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(model => model.QualificationTypeCode, ViewBag.Qualifications as SelectList, ModelValidations.Dropdown_Qualification_Label, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.QualificationTypeCode, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SubjectCode, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(model => model.SubjectCode, ViewBag.Subjects as SelectList, ModelValidations.Dropdown_Subject_Label, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SubjectCode, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Result, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(model => model.Result, ViewBag.Results as SelectList, ModelValidations.Dropdown_Result_Label, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Result, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SittingCode, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(model => model.SittingCode, ViewBag.Sittings as SelectList, ModelValidations.Dropdown_Sitting_Label, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SittingCode, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    @Html.LabelFor(model => model.Certificate, htmlAttributes: new { @class = "control-label col-md-3" })
+
+                    <div class="col-md-9 small-btn-align-label">
+                        <div class="row">
+                            @Html.HiddenFor(c => Model.CertificateId)
+
+                            @if (Model.CertificateId > 0)
+                            {
+                                <div class="col-md-8">
+                                    @Html.ActionLink("View Certificate", "DownloadCertificate", "Qualification", new { id = Model.CertificateId }, new { @id = "lnkViewCertificate", target = "_blank" })
+                                </div>
+                            }
+
+
+                            @if (User.IsInRole(UserRole.Student.ToString()))
+                            {
+                                <div class="col-md-8" id="dvFileUploadEdit" style="@(Model.CertificateId > 0 ? "display:none" : "")">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <button type="button" id="EditQualification_Certificate" class="btn-icon btn-upload"  value="upload Certificate" size="40">Certificate</button>
+                                                </div>
+                                                <div class="col-lg-12" id="dvFileNameEdit">
+                                                </div>
+                                                <input style="visibility:hidden;opacity:0" type="file" id="editQualification_Certificate" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row" id="dvRemoveEdit" style="@(Model.CertificateId > 0 ?"": "display:none" )">
+                                        <div class="col-lg-12 text-right">
+                                            <div id="optionalDiv1"><a class="btn-icon btn-delete" name="btnRemove1" id="btnEditQualification_Remove" value="Remove">Remove</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" id="btnEditSave" class="btn btn-save">Save</button>
+            <button type="button" id="btnEditQualification" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        qualificationService.EditQualification.init();
+
+    </script>
+
+    if (!string.IsNullOrWhiteSpace(ViewBag.SuccessMessage))
+    {
+        //refersh grid on success
+        if (User.IsInRole(UserRole.Student.ToString()))
+        {
+            <script type="text/javascript">
+                qualificationService.Common.refreshPendingGrid();
+            </script>
+        }
+        else
+        {
+            <script type="text/javascript">
+                studentDetailService.gridService.refreshPendingGrid();
+            </script>
+        }
+
+    }
+
+}
+
+
+

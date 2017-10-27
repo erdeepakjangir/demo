@@ -1,0 +1,172 @@
+﻿@model Survey.Web.ViewModel.StudentViewModel
+@using Survey.Web;
+@using Survey.Business.Entities.Enums;
+@using Survey.Web.Resources;
+@{
+    ViewBag.Title = "StudentQualification";
+}
+@Html.ValidationSummary(true)
+<div class="row">
+    <div class="col-xs-12">
+        <div class="breadcrumb-wraper">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
+                    <li class="active">Edit/Approve</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 divider-btm top-buffer">
+        <div class="container">
+            <div class="row form-horizontal plain-well form-group-static">
+                <div class="col-md-4 col-lg-2">
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-4">Student Id:</label>
+                        <p class="form-control-static col-xs-8 col-md-8">@Model.StudentId</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-2">
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-5">Student Name:</label>
+                        <p class="form-control-static col-xs-8 col-md-7">@Model.StudentName</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-2">
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-4">Course Code:</label>
+                        <p class="form-control-static col-xs-8 col-md-8">@Model.CourseCode</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-2">
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-4">Course Title:</label>
+                        <p class="form-control-static col-xs-8 col-md-8">@Model.CourseTitle</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-2">
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-4">Mode:</label>
+                        <p class="form-control-static col-xs-8 col-md-8">@Model.Mode</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-2">
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-4">Qual. Aim:</label>
+                        <p class="form-control-static col-xs-8 col-md-8">@Model.QualificationAim</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container top-buffer">
+    <div class="content-container">
+        <div class="row">
+            <div class="col-xs-12"><a href="#" class="toggle-all pull-right">Open All</a></div>
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#panel1" aria-expanded="false">@ModelValidations.Student_Existing_Qual_Label <i class="glyphicon glyphicon-plus pull-right"></i></h4>
+                    </div>
+                    <div id="panel1" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            @*id required for approve reject*@
+                            @Html.HiddenFor(m => m.StudentId)
+                            <div id="dvExistingnQual">
+                                @Html.Partial("_Existing", Model)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#panel2" aria-expanded="true">@ModelValidations.Student_Pending_Qual_Label <i class="glyphicon glyphicon-minus pull-right"></i></h4>
+                    </div>
+                    <div id="panel2" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div id="dvpendingQual">
+                                @Html.Partial("_Pending", Model)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#panel3" aria-expanded="false">@ModelValidations.Student_Rejected_Qual_Label <i class="glyphicon glyphicon-plus pull-right"></i></h4>
+                    </div>
+                    <div id="panel3" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div id="dvRejectedQual">
+                                @Html.Partial("_Rejected", Model)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="rejectModal" class="modal" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body" id="rejectformbody">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="divValidationMessage" class="alert alert-danger" style="display:none">
+                                            <p>Enter the Remark</p>
+                                        </div>
+                                    </div>
+                                    @Html.Label("Remark", new { @class = "col-md-12" })
+                                    <div class="col-md-12">
+                                        @Html.TextArea("rejectRemark", new { @class = "form-control", @id = "rejectRemark", maxlength = 4000 })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                @Html.Hidden("rejectedStudentQualificationId")
+                                <a href="#" onclick="studentDetailService.gridService.rejectQualification()" data-ajaxload="true" class="btn-icon btn-reject btn-lg" data-toggle="modal">@ModelValidations.Student_Grid_Column_Reject</a>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    @Scripts.Render("~/bundles/facultyjs")
+    <script type="text/javascript">
+        var AppUrlSettings = AppUrlSettings || {};
+        AppUrlSettings.ExistingUrl = '@Url.Action("StudentExistingQualification", "Qualification")';
+        AppUrlSettings.PendingUrl = '@Url.Action("StudentPendingQualification", "Qualification")';
+        AppUrlSettings.RejectedUrl = '@Url.Action("StudentRejectedQualification", "Qualification")';
+        AppUrlSettings.ApproveUrl = '@Url.Action("Approve", "Qualification")';
+        AppUrlSettings.RejectUrl = '@Url.Action("Reject", "Qualification")';
+        $(document).ready(function () {
+            studentDetailService.gridService.init(@Model.StudentId);
+        })
+        var AppMessages = AppMessages || {};
+        AppMessages.RejectMessage = '@ModelValidations.Message_Qualification_Reject_Remark_Len';
+        $('.toggle-all').click(function () {
+            if ($(this).data("lastState") === null || $(this).data("lastState") === 0) {
+                $('.collapse.in').collapse('hide');
+                $(this).data("lastState", 1);
+                $(this).text("Open All");
+            }
+            else {
+                $('.panel-collapse').removeData('bs.collapse')
+                .collapse({ parent: false, toggle: false })
+                .collapse('show')
+                .removeData('bs.collapse')
+                .collapse({ parent: '#accordion', toggle: false });
+                $(this).data("lastState", 0);
+                $(this).text("Close All");
+            }
+        });
+    </script>
+}
+

@@ -1,0 +1,191 @@
+﻿@model Survey.Web.ViewModel.ReportViewModel
+@using System.Web;
+@using Survey.Web;
+@using Survey.Web.Resources;
+@using Survey.Business.Entities.Enums;
+
+@if (Model.ReportSummary != null)
+{
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-lg-3">
+                <div class="card">
+                    <div class="card-block p-0 clearfix">
+                        <i class="fa fa-thumbs-o-up bg-primary pull-left"></i>
+                        <h5 class="h5 text-center">@Model.ReportSummary.Total</h5>
+                        <div class="text-muted text-center">QUALIFICATIONS RECEIVED</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card">
+                    <div class="card-block p-0 clearfix">
+                        <i class="fa fa-hourglass-half bg-warning pull-left"></i>
+                        <h5 class="h5 text-center">@Model.ReportSummary.Pending</h5>
+                        <div class="text-muted text-center">QUALIFICATIONS PENDING</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card">
+                    <div class="card-block p-0 clearfix">
+                        <i class="fa fa-ban bg-danger pull-left"></i>
+                        <h5 class="h5 text-center">@Model.ReportSummary.Rejected</h5>
+                        <div class="text-muted text-center">QUALIFICATIONS REJECTED</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card">
+                    <div class="card-block p-0 clearfix">
+                        <i class="fa fa-check bg-success pull-left"></i>
+                        <h5 class="h5 text-center">@Model.ReportSummary.Approved</h5>
+                        <div class="text-muted text-center">QUALIFICATIONS APPROVED</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container report-grids">
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 data-toggle="collapse" data-target="#demo" class="expand" aria-expanded="true">FACULTY BREAKDOWN VIEW</h4>
+                            </div>
+                            <div id="demo" class="collapse in" aria-expanded="true" style="">
+                                <table id="tblFacultySummary" class="table table-fixed">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-xs-3">Faculty Code</th>
+                                            <th class="col-xs-3">Pending </th>
+                                            <th class="col-xs-3">Rejected </th>
+                                            <th class="col-xs-3">Approved </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ReportSummary.FacultySummary)
+                                        {
+                                            if (item != null)
+                                            {
+                                                <tr>
+                                                    <td class="col-xs-3">
+                                                        @if (Model.IsFacultyView)
+                                                        {
+                                                            @item.FacultyCode
+                                                        }
+                                                        else
+                                                        {
+                                                            <a onclick="reportService.Summary.loadFacultyView('@item.FacultyCode')">@item.FacultyCode</a>
+                                                        }
+                                                    </td>
+
+                                                    <td class="col-xs-3">@item.Pending</td>
+                                                    <td class="col-xs-3">@item.Rejected</td>
+                                                    <td class="col-xs-3">@item.Approved</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 data-toggle="collapse" data-target="#ub-view" class="expand" aria-expanded="true">USER BREAKDOWN VIEW</h4>
+                            </div>
+                            <div id="ub-view" class="collapse in" aria-expanded="true" style="">
+                                <table id="tblUserSummary" class="table table-bordered table-fixed">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-xs-3">User Name</th>
+                                            <th class="col-xs-3">Faculty Code </th>
+                                            <th class="col-xs-3">Approved </th>
+                                            <th class="col-xs-3">Rejected </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ReportSummary.UserSummary)
+                                        {
+                                            if (item != null)
+                                            {
+                                                <tr>
+                                                    <td class="col-xs-3">@item.UserName</td>
+                                                    <td class="col-xs-3">@item.FacultyCode</td>
+                                                    <td class="col-xs-3">@item.Approved</td>
+                                                    <td class="col-xs-3">@item.Rejected</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 data-toggle="collapse" data-target="#q-received" class="expand" aria-expanded="true">QUALIFICATIONS RECEIVED</h4>
+                    </div>
+                    <div id="q-received" class="collapse in" aria-expanded="true" style="">
+                        <table id="tblQualificationSummary" class="table table-fixed table-big">
+                            <thead>
+                                <tr>
+                                    <th class="col-xs-8">Qualifications Received</th>
+                                    <th class="col-xs-4">Total </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ReportSummary.QualificationSummary)
+                                {
+                                    if (item != null)
+                                    {
+                                        <tr>
+                                            <td class="col-xs-8">@item.Qualification</td>
+                                            <td class="col-xs-4">@item.Total</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+
+    $("#tblFacultySummary, #tblQualificationSummary").DataTable({
+        searching: false,
+        paging: false,
+        bInfo: false,       
+        bLengthChange: false,
+        language: {
+            infoEmpty: AppMessages.noRecordMessage
+        }
+    });
+
+    $("#tblUserSummary").DataTable({
+        searching: false,
+        paging: false,
+        bInfo: false,
+        order: [[1, "asc"], [0, "asc"]],
+        bLengthChange: false,
+        language: {
+            infoEmpty: AppMessages.noRecordMessage
+        }
+    });
+</script>

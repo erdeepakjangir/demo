@@ -1,0 +1,13 @@
+﻿@model Survey.Web.ViewModel.QuestionBankViewModel
+@using (Html.BeginForm("AddQue", "Home",FormMethod.Post))
+{
+    <div>
+        @Html.Label("Question Text")
+        @Html.TextBoxFor(m=> m.QueText)
+    </div>
+    <div>
+        @Html.Label("Question Type")
+        @Html.TextBoxFor(m => m.OptionType)
+    </div>
+    <button type="submit" class="btn btn-primary button button4">Sign</button>
+}

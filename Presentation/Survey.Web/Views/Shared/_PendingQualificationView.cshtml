@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Survey.Web.ViewModel.QualificationViewModel>
+@using Survey.Web;
+@using Survey.Business.Entities.Enums;
+@using Survey.Web.Resources
+<div class="table-responsive">
+    <table class="table table-hover" id="tblPendingQualifications">
+        <thead>
+            <tr>
+                <th class="col-md-1">
+                    @Html.DisplayName(ModelValidations.Home_Grid_Title_Year)
+                </th>
+                <th class="col-md-3">
+                    @Html.DisplayName(ModelValidations.Home_Grid_Title_QualificationCode)
+                </th>
+                <th class="col-md-2">
+                    @Html.DisplayName(ModelValidations.Home_Grid_Title_Subject)
+                </th>
+                <th class="col-md-2">
+                    @Html.DisplayName(ModelValidations.Home_Grid_Title_Result)
+                </th>
+                <th class="col-md-2">
+                    @Html.DisplayName(ModelValidations.Home_Grid_Title_Sitting)
+                </th>
+                <th class="col-md-1 actions-width">
+                    @Html.DisplayName(ModelValidations.Home_Grid_Title_Action)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Year)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.QualificationTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SubjectTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Result)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SittingTitle)
+                        </td>
+                        <th>
+                            <a href="#" onclick="qualificationService.EditQualification.loadEditPopup('@Url.Action("Edit", "Qualification", new { id = @item.StudentQualificationId, studentId = @item.StudentId })')" data-ajaxload="true" class="btn-icon btn-edit" data-toggle="modal" data-target="#editModal">@ModelValidations.Student_Grid_Column_Edit</a>
+                            <a href="#" onclick="if(window.confirm('@ModelValidations.Message_Qualification_Delete_Confirm')) {  qualificationService.DeleteQualification('@item.StudentQualificationId') }" class="btn-icon btn-delete">@ModelValidations.Home_Grid_Column_Delete</a>
+                        </th>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

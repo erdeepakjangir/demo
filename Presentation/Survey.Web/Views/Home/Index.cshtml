@@ -1,0 +1,169 @@
+﻿@model IEnumerable<Survey.Web.ViewModel.QuestionBankViewModel>
+@using Survey.Web;
+@using Survey.Web.Resources;
+@using Survey.Business.Entities.Enums;
+@{
+    ViewBag.Title = "DashBoard";
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="breadcrumb-wraper">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li><a href="#">Dashboard</a></li>
+                </ol>
+                @Html.ActionLink("Report", "Index", "Report", null, new { @class = "btn-icon btn btn-report pull-right btn-report-placing" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+   
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="container">
+            <div class="content-container">
+                <div class="row">
+
+
+                    <div class="col-md-12 text-right" id="dvButton"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12"><hr /></div>
+                    <div id="dvQualification" class="col-xs-12">
+                       
+                        <button id="btnShowModal" type="button" data-target="#loginModal" data-toggle="modal"
+                                class="btn btn-sm btn-default pull-left col-lg-11 button button4">
+                            Add Question
+                        </button>
+                        
+                        
+                        <div class="modal fade" tabindex="-1" id="loginModal"
+                             data-keyboard="false" data-backdrop="static">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            ×
+                                        </button>
+                                        <h4 class="modal-title">Add Question</h4>
+                                    </div>
+                                    <div class="modal-body">                                       
+                                            @Html.Partial("_AddQuestion" ,new QuestionBankViewModel())                                       
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>  
+                          
+                                @*<div class="row">
+                                    @item.QueText
+                                </div>
+                                <div class="row">
+                                    @item.OptionType
+                                </div>*@
+
+
+
+                                <table class="table table-hover" id="tblApprovedQualifications">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No. </th>
+                                            <th>Question Description </th>
+                                            <th> Question Type </th>
+                                            @*<th>Email</th>
+                                            <th>Salary</th>
+                                            <th>Company</th>
+                                            <th>Department</th>*@  
+                                            </tr>
+                                    </thead>
+                                    <tbody>
+                        @if (Model != null)
+                                {
+                                       
+                                            foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                     
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.QueText)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.OptionType)
+                                                    </td>
+                                                    @*<td>
+                                                        @Html.DisplayFor(modelItem => item.Result)
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.SittingTitle)
+                                                    </td>*@
+                                                </tr>
+                                            }
+                                      
+                                            }
+                                    </tbody>
+                                </table>
+                            
+
+                        
+                    </div>
+                </div>
+                @section scripts {
+                    @Scripts.Render("~/bundles/facultyjs")
+                    <script type="text/javascript">
+                        defaultPageSize =  @Convert.ToInt16(System.Web.Configuration.WebConfigurationManager.AppSettings["DefaultPagesize"]) ;
+
+                        var AppMessages = AppMessages || {};
+                        AppMessages.ValidDateRanage = '@ModelValidations.Validation_Date_Range_Invalid';
+
+
+                        $(document).ready(function () {
+                            debugger;
+                           
+                                  $('#tblApprovedQualifications').DataTable({
+                                 
+                                });
+                                  //$("#btnShowModal").click(function () {  
+                                  //    $("#loginModal").modal('show');  
+                                  //});  
+  
+                                  //$("#btnHideModal").click(function () {  
+                                  //    $("#loginModal").modal('hide');  
+                                  //});  
+
+
+                                  @*$('#btnShowModal').on('click', function () {
+                                      debugger;
+                                      $("#loginModal").modal('show');  
+                                      $("#loginModal").dialog({
+                                          autoOpen: true,
+                                          position: { my: "center", at: "top+350", of: window },
+                                          width: 1000,
+                                          resizable: false,
+                                          title: 'Add User Form',
+                                          modal: true,
+                                          open: function () {
+                                              $(this).load('@Url.Action("AddQuestion", "Home")');
+                                          },
+                                          buttons: {
+                                              "Add User": function () {
+                                                  addUserInfo();
+                                              },
+                                              Cancel: function () {
+                                                  $(this).dialog("close");
+                                              }
+                                          }
+                                      });
+                                      return false;*@
+                                  });                      
+                    </script>
+                }
+            </div>
+        </div>
+    </div>
+</div>

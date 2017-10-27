@@ -1,0 +1,68 @@
+﻿@model Survey.Web.ViewModel.StudentViewModel
+@using Survey.Business.Entities.Enums;
+@using Survey.Web.Resources;
+<table class="table" id="tblPendingQualifications">
+    <thead>
+        <tr>
+            <th class="col-md-1">
+                @Html.DisplayName(ModelValidations.Home_Grid_Title_Year)
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayName(ModelValidations.Home_Grid_Title_QualificationTitle)
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayName(ModelValidations.Home_Grid_Title_Subject)
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayName(ModelValidations.Home_Grid_Title_Result)
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayName(ModelValidations.Home_Grid_Title_Sitting)
+            </th>
+            <th class="col-md-3">
+                @Html.DisplayName(ModelValidations.Home_Grid_Title_Action)
+            </th>
+            <th class="col-md-2">
+                View Certificate
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PendingQualifications)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.QualificationTitle)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubjectTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Result)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SittingTitle)
+                </td>
+                <td>
+                    <a href="#" onclick="studentDetailService.gridService.approveQualification(@item.StudentQualificationId)" data-ajaxload="true" class="btn-icon btn-aprrove" data-toggle="modal">@ModelValidations.Student_Grid_Column_Approve</a>
+                    <a href="#" onclick="studentDetailService.gridService.openRejectPopUp(@item.StudentQualificationId)" data-ajaxload="true" class="btn-icon btn-reject" data-toggle="modal">@ModelValidations.Student_Grid_Column_Reject</a>
+                    <a href="#" onclick="qualificationService.EditQualification.loadEditPopup('@Url.Action("Edit","Qualification",new { id= @item.StudentQualificationId, studentId = Model.StudentId })')" data-ajaxload="true" class="btn-icon btn-edit" data-toggle="modal" data-target="#editModal">@ModelValidations.Student_Grid_Column_Edit</a>
+                </td>
+                @*<td><a href="#" onclick=""  >View Certificate</a></td>*@
+                <td>
+                    @if (item.CertificateId != null && item.CertificateId > 0)
+                    {
+                        @Html.ActionLink("Certificate", "DownloadCertificate", "Qualification", new { id = item.CertificateId },new { @target="_blank"} );
+
+                    }
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

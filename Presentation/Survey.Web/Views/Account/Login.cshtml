@@ -1,0 +1,172 @@
+﻿@model Survey.Web.ViewModel.LoginModel
+
+@{
+    ViewBag.Title = "Welcome to Coventry University";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<style type="text/css">
+    body {
+        background: #eee;
+    }
+
+    header {
+        display: none;
+    }
+</style>
+<div class="row">
+    @using (Html.BeginForm("login", "account"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="login-wrapper">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center"><img src="~/Content/Images/cu-logo2.png" width="125" alt="Coventry University" /></div>
+                    <div class="login-container">
+                        <div class="row">
+                            <div class="col-md-12"><p class="alert alert-info">@Survey.Web.Resources.ModelValidations.Account_login_instruction</p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-horizontal">
+                                    <div>
+                                        <span class="text-inline"> @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })</span>
+                                    </div>
+                                    <span class="input input--hoshi input--filled">
+                                        @Html.DropDownListFor(model => model.DomainName, ViewBag.Domain as IEnumerable<SelectListItem>, "Select Domain", new { @class = "", @id = "input-6", @type = "DropDown", @value = "" })
+                                        @Html.HiddenFor(model => model.IsAdmin)
+
+
+                                    </span>
+                                    <span class="input input--hoshi input--filled">
+                                        @Html.TextBoxFor(model => model.UserName, new { @class = "input__field input__field--hoshi", @id = "input-4", @type = "UserName", @value = "" })
+                                        <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
+                                            <span class="input__label-content input__label-content--hoshi">User name</span>
+                                        </label>
+                                    </span>
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                    <span class="input input--hoshi input--filled">
+                                        @Html.PasswordFor(model => model.Password, new { @class = "input__field input__field--hoshi", @id = "input-5", @value = "" })
+                                        <label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-5">
+                                            <span class="input__label-content input__label-content--hoshi">Password</span>
+                                        </label>
+                                    </span>
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                    <input type="submit" value="LOGIN" class="btn btn-primary btn-block" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    (function (window) {
+
+        'use strict';
+
+        // class helper functions from bonzo https://github.com/ded/bonzo
+
+        function classReg(className) {
+            return new RegExp("(^|\\s+)" + className + "(\\s+|$)");
+        }
+
+        // classList support for class management
+        // altho to be fair, the api sucks because it won't accept multiple classes at once
+        var hasClass, addClass, removeClass;
+
+        if ('classList' in document.documentElement) {
+            hasClass = function (elem, c) {
+                return elem.classList.contains(c);
+            };
+            addClass = function (elem, c) {
+                elem.classList.add(c);
+            };
+            removeClass = function (elem, c) {
+                elem.classList.remove(c);
+            };
+        }
+        else {
+            hasClass = function (elem, c) {
+                return classReg(c).test(elem.className);
+            };
+            addClass = function (elem, c) {
+                if (!hasClass(elem, c)) {
+                    elem.className = elem.className + ' ' + c;
+                }
+            };
+            removeClass = function (elem, c) {
+                elem.className = elem.className.replace(classReg(c), ' ');
+            };
+        }
+
+        function toggleClass(elem, c) {
+            var fn = hasClass(elem, c) ? removeClass : addClass;
+            fn(elem, c);
+        }
+
+        var classie = {
+            // full names
+            hasClass: hasClass,
+            addClass: addClass,
+            removeClass: removeClass,
+            toggleClass: toggleClass,
+            // short names
+            has: hasClass,
+            add: addClass,
+            remove: removeClass,
+            toggle: toggleClass
+        };
+
+        // transport
+        if (typeof define === 'function' && define.amd) {
+            // AMD
+            define(classie);
+        } else {
+            // browser global
+            window.classie = classie;
+        }
+
+    })(window);
+
+</script>
+<script>
+    (function () {
+        // trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+        if (!String.prototype.trim) {
+            (function () {
+                // Make sure we trim BOM and NBSP
+                var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+                String.prototype.trim = function () {
+                    return this.replace(rtrim, '');
+                };
+            })();
+        }
+
+        [].slice.call(document.querySelectorAll('input.input__field')).forEach(function (inputEl) {
+            // in case the input is already filled..
+            if (inputEl.value.trim() !== '') {
+                classie.add(inputEl.parentNode, 'input--filled');
+            }
+
+            // events:
+            inputEl.addEventListener('focus', onInputFocus);
+            inputEl.addEventListener('blur', onInputBlur);
+        });
+
+        function onInputFocus(ev) {
+            classie.add(ev.target.parentNode, 'input--filled');
+        }
+
+        function onInputBlur(ev) {
+            if (ev.target.value.trim() === '') {
+                classie.remove(ev.target.parentNode, 'input--filled');
+            }
+        }
+    })();
+</script>

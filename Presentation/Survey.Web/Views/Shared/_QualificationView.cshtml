@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Survey.Web.ViewModel.QualificationViewModel>
+@using Survey.Business.Entities.Enums;
+@using Survey.Web.Resources;
+@{
+}
+<div class="table-responsive">
+    <table class="table table-hover" id="tblQualifications">
+        <thead>
+            <tr>
+                <th class="col-md-1">
+                    @ModelValidations.Home_Grid_Title_Faculty
+                </th>
+                <th class="col-md-2">
+                    @ModelValidations.Home_Grid_Title_StudentNo
+                </th>
+                <th class="col-md-2">
+                    @ModelValidations.Home_Grid_Title_StudentName
+                </th>
+                <th class="col-md-3">
+                    @ModelValidations.Home_Grid_Title_QualificationTitle
+                </th>
+                <th class="col-md-2">
+                    @ModelValidations.Home_Grid_Title_Subject
+                </th>
+                <th class="col-md-1">
+                    @ModelValidations.Home_Grid_Title_Status
+                </th>
+                <th class="col-md-1">
+                    @ModelValidations.Home_Grid_Title_SubmittedDate
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.FacultyCode
+                        </td>
+
+                        <td>
+                            @Html.ActionLink(@item.StudentId.ToString(), "StudentQualification", "Qualification", new { id = item.StudentId }, null)
+
+                        </td>
+                        <td>
+                            @Html.ActionLink(@item.StudentName, "StudentQualification", "Qualification", new { id = item.StudentId }, null)
+                        </td>
+                        <td>
+                            @item.QualificationTitle
+                        </td>
+                        <td>
+                            @item.SubjectTitle
+                        </td>
+                        <td>
+                            @item.Status
+                        </td>
+                        <td>
+                            @item.SubmittedDate.ToShortDateString()
+                        </td>
+                      
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,110 @@
+﻿@model Survey.Web.ViewModel.ReportViewModel
+
+@using Survey.Web;
+@using Survey.Web.Resources;
+@using Survey.Business.Entities.Enums;
+@{
+    ViewBag.Title = "Reports";
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="breadcrumb-wraper">
+            <div class="container">
+                <ol class="breadcrumb">
+                    <li><a href="#">@Html.ActionLink("Dashboard", "Index", "Home")</a></li>
+                    <li class="active">Report</li>
+                </ol>
+               
+            </div>
+        </div>
+    </div>
+</div>
+@using (Ajax.BeginForm("Search", "Report", new AjaxOptions { HttpMethod = "Post", OnBegin = "ajaxindicatorstart()", OnComplete = "ajaxindicatorstop()", UpdateTargetId = "dvReports" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel-group panel-bg" id="accordion">
+                <div class="panel panel-default">
+                    <div class="container">
+                        <div class="panel-container">
+                            <div id="panel1" class="panel-collapse in">
+                                <div class="panel-body pos-relative">
+                                    <div class="check-type">
+                                        <p>Select the Type</p>
+                                        <div class="check-time">
+                                            <div class="radio radio-inline">
+                                                <input type="radio" id="chkYear" name="chkType" value="option1" checked="">
+                                                <label for="chkYear"> Year</label>
+                                            </div>
+                                            <div class="radio radio-inline">
+                                                <input type="radio" id="chkDate" name="chkType" value="option1">
+                                                <label for="chkDate"> Date </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="check-date">
+                                        <div class="form-horizontal">
+                                            <div id="yearView">
+                                                @Html.DropDownListFor(m => m.SearchQualification.Year, new SelectList(ViewBag.Years), ModelValidations.Dropdown_Year_Label, new { @class = "form-control" })
+                                            </div>
+                                            <div id="dateView" style="display:none">
+                                                <label>Date:</label>
+                                                <div class="btn-group-wrap">
+                                                    <div class="date-element">
+                                                        <div class='input-group date datetimepicker'>
+                                                            @Html.TextBoxFor(m => m.SearchQualification.SubmittedFromDate, new { @class = "form-control", @placeholder = "From Date" })
+
+                                                            <span class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="date-element">
+                                                        <div class='input-group date datetimepicker'>
+                                                            @Html.TextBoxFor(m => m.SearchQualification.SubmittedToDate, new { @class = "form-control", @placeholder = "To Date" })
+                                                            <span class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="search-wrap">
+                                        @Html.HiddenFor(m => m.SearchQualification.FacultyCode)
+                                        <button type="submit" id="btnSearch" class="btn btn-primary"><i class="fa fa-search fa-fw"></i> Search</button>
+                                    </div>
+                                    @if (!Model.IsFacultyView)
+                                    {
+                                        <div class="back-btn-wrap" onclick=""><a id="lnkBack" class="back-btn" style="display:none" onclick="reportService.Summary.loadPlannerView();"> <i class="fa fa-angle-left" aria-hidden="true"></i> Back</a></div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div id="dvReports" class="row">
+    @Html.Partial("_report", Model);
+</div>
+@section scripts
+{
+    @Scripts.Render("~/bundles/reportjs")
+    <script type="text/javascript">
+
+        var AppMessages = AppMessages || {};
+        AppMessages.ValidDateRanage = '@ModelValidations.Validation_Date_Range_Invalid';
+        AppMessages.DateRanageRequired = '@ModelValidations.Validation_Dates_Required';
+        AppMessages.YearRequired = '@ModelValidations.Validation_Year_Required';
+
+        $(document).ready(function () {
+            reportService.Summary.init();
+        });
+    </script>
+}

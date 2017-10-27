@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var controller = ViewContext.RouteData.GetRequiredString("controller");
+    var action = ViewContext.RouteData.GetRequiredString("action");
+}
+
+
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="container">
+            <div class="content content-container">
+                <h2>
+                    Sorry, there appears to have been an error.
+                </h2>
+                <br />
+                <a class="grid_12" href="javascript: history.go(-1)">Back</a>
+                <br />
+                <br />
+
+                <image id="expand-btn" src="@Url.Content("../Content/images/add.png")" type="button" />Error Message
+                <p id="demo" class="">
+                    @Html.Raw(ViewData["ProductionException"])
+                    @Html.Raw(ViewData["DevelopmentException"])
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .collapse {
+        display: none;
+    }
+
+    .table-filter-wrap {
+        display: none;
+    }
+</style>
+<script>
+    $("document").ready(function () {
+        $("#expand-btn").click(function () {
+            $(".collapse").toggle()
+        });
+    })
+
+</script>

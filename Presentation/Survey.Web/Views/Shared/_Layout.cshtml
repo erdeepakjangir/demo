@@ -1,0 +1,146 @@
+﻿@using Survey.Web;
+@using Survey.Business.Entities.Enums;
+@using Survey.Web.Resources;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <link href="/favicon.ico" rel="shortcut icon">
+    <title>@ViewBag.Title</title>
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                @if (Request.IsAuthenticated)
+                {
+                    <div class="logo-container">
+                        <span class="pull-right btn-logout">
+                            <a href="@Url.Action("Logout", "Account")">
+                                <span class="glyphicon glyphicon-log-out" aria-hidden="true">
+                                </span>
+                                @Html.ActionLink("Logout", "Logout", "Account")
+                            </a>
+
+                            <div class="btn-group">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-user-o fa-fw" aria-hidden="true"></i> @User.Identity.Name
+
+                                </a>
+
+                                @if (User.IsInRole(UserRole.Student.ToString()))
+                                {<ul class="dropdown-menu dropdown-menu-right arrow_box">
+                                    <li><a href="#"><span>Course Code:</span><span> @ViewBag.StudentCourseCode</span></a></li>
+                                    <li><a href="#"><span>Course Title:</span><span>@ViewBag.StudentCourseTitle </span></a></li>
+                                    <li><a href="#"><span>Mode:</span><span>@ViewBag.StudentMode </span></a></li>
+                                    <li><a href="#"><span>Stage:</span><span>@ViewBag.StudentStageId</span></a></li>
+                                    <li><a href="#"><span>Qual. Aim:</span><span>@ViewBag.StudentQualAim</span></a></li>
+                                </ul>
+                                }
+                            </div>
+                        </span>
+                        <span class="pull-left logo">
+                            <img src="~/Content/images/cu-logo.png" alt="Coventry University" />
+                        </span>
+                    </div>
+                }
+            </div>
+        </div>
+    </header>
+
+    @*<div class="wrapper">
+        <div class="container vl-container">*@
+            @RenderBody()
+            @*<div class="clearfix"></div>
+        </div>
+    </div>*@
+
+    <!--Edit Modal -->
+    <div id="editModal" class="modal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">@ModelValidations.Header_Update_Qualification_Label</h4>
+                </div>
+                <div class="modal-body" id="editformbody">
+                    <!-- remote content will be inserted here via jQuery load() -->
+                </div>
+                @*<div class="modal-footer"></div>*@
+            </div>
+        </div>
+    </div>
+    <div id="rejectModal" class="modal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body" id="rejectformbody">
+                    <input type="text" class="form-control" />
+                    <div>
+                        <button name="Cancel" type="button" class="btn btn-secondary pull-left">Cacnel</button>
+                    </div>
+                    <div>
+                        @*  <a href="#" onclick="dashboardService.gridService.rejectQualification(@item.StudentQualificationId)" data-ajaxload="true" class="btn-icon btn-reject" data-toggle="modal" data-target="#rejectModal">@ModelValidations.Student_Grid_Column_Reject</a>*@
+                        <button name="Save" type="button" class="btn btn-success pull-right">save</button>
+                    </div>
+                    <!-- remote content will be inserted here via jQuery load() -->
+                </div>
+                @*<div class="modal-footer"></div>*@
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Modal -->
+    <div id="MessageModal" class="modal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                @*<div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Message</h4>
+                    </div>*@
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div id="divMessage" class="alert" style="display:none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", false)
+    <script type="text/javascript">
+
+        var AppUrlSettings = AppUrlSettings || {};
+        AppUrlSettings.GetSubjectAndResultUrl = '@Url.Action("GetSubjectAndResult", "Qualification")';
+        AppUrlSettings.PendingQualificationUrl = '@Url.Action("GetPendingQualifications", "Qualification")';
+      
+
+        var AppMessages = AppMessages || {};
+        AppMessages.noRecordMessage = '@ModelValidations.Message_Grid_No_Record_Found';
+        AppMessages.InternalServerError = '@ModelValidations.Message_Internal_Server_Error';
+
+        var AppGridSettings = AppGridSettings || {};
+        AppGridSettings.PendingGridCurrentPage = 0;
+
+    </script>
+
+</body>
+</html>
